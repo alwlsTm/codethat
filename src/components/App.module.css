@@ -1,0 +1,13 @@
+* {
+  box-sizing: border-box;
+  word-break: keep-all;
+}
+
+html {
+  overflow-y: scroll;
+  background-color: #f9f9f9;
+}
+
+body {
+  margin: 0;
+}

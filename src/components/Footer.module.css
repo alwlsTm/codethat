@@ -1,0 +1,20 @@
+.footer {
+  padding: 20px 0 53px;
+  color: #878787;
+  background-color: #494949;
+}
+
+.links {
+  padding: 0;
+  color: #c4c4c4;
+  list-style: none;
+}
+
+.links > * {
+  display: inline-block;
+  line-height: 1.64;
+}
+
+.links > :not(:last-child) {
+  margin-right: 30px;
+}
