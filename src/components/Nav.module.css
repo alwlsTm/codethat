@@ -3,6 +3,7 @@
   z-index: 1;
   padding: 15px 0;
   background-color: #fff;
+  box-shadow: var(--box-shadow);
 }
 
 .container {

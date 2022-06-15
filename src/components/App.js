@@ -1,5 +1,5 @@
 import Nav from "./Nav";
-import Footer from "./Footer";
+//import Footer from "./Footer";
 import styles from './App.module.css';
 
 function App({ children }) {
@@ -7,7 +7,7 @@ function App({ children }) {
     <>
       <Nav className={styles.nav} />
       <div className={styles.body}>{children}</div>
-      <Footer className={styles.Footer} />
+      {/* <Footer className={styles.Footer} /> */}
     </>
   );
 }
