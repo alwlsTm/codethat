@@ -1,3 +1,4 @@
+import Container from './Container';
 import UserMenu from "./UserMenu";
 import styles from './Nav.module.css';
 import logoImg from '../IMGS/logo.svg';
@@ -5,7 +6,7 @@ import logoImg from '../IMGS/logo.svg';
 function Nav() {
   return (
     <div className={styles.nav}>
-      <div className={styles.container}>
+      <Container className={styles.container}>
         <img src={logoImg} alt="codethat"></img>
         <ul className={styles.menu}>
           <li>카탈로그</li>
@@ -14,7 +15,7 @@ function Nav() {
             <UserMenu />
           </li>
         </ul>
-      </div>
+      </Container>
     </div>
   );
 }
