@@ -1,6 +1,7 @@
 import styles from './UserMenu.module.css';
 import personIcon from '../IMGS/person.png';
 
+//Nav 유저 메뉴
 function UserMenu() {
   return (
     <div className={styles.userMenu}>

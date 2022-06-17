@@ -4,6 +4,7 @@ import ListPage from '../components/ListPage';
 import searchBarStyles from '../components/SearchBar.module.css';
 import searchIcon from '../IMGS/search.svg';
 
+//카탈로그 페이지
 function CourseListPage() {
   const [keyword, setKeyword] = useState(''); //검색 키워드 state
   const courses = getCourses(); //코스 목록 데이터 불러오기
