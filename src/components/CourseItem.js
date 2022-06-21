@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import Card from "./Card";
 import CourseIcon from "./CourseIcon";
 import Tags from './Tags';
