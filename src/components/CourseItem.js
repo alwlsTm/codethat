@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Card from "./Card";
 import CourseIcon from "./CourseIcon";
 import Tags from './Tags';
@@ -15,7 +16,9 @@ function CourseItem({ course }) {
         <CourseIcon photoUrl={course.photoUrl} />
       </div>
       <div className={styles.content}>
-        <h2 className={styles.title}>{course.title}</h2>
+        <h2 className={styles.title}>
+          <Link to={`/courses/${course.slug}`}>{course.title}</Link>
+        </h2>
         <p className={styles.description}>{course.summary}</p>
         <div>
           <Tags values={[course.language, difficulty]} />
