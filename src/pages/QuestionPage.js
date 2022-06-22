@@ -1,3 +1,4 @@
+import { useParams } from 'react-router-dom';
 import { getQuestionById } from '../api';
 import classNames from 'classnames';
 import Avatar from '../components/Avatar';
@@ -9,7 +10,8 @@ import styles from './QuestionPage.module.css';
 //커뮤니티 질문 클릭 시 페이지
 //질문 & 답변
 function QuestionPage() {
-  const question = getQuestionById('616825'); //질문 내용 불러오기
+  const { questionId } = useParams(); //현재 페이지의 경로의 파라미터가 저장되어 있음
+  const question = getQuestionById(questionId); //questionId 값에 따라서 알맞는 데이터를 렌더링
 
   return (
     <>
