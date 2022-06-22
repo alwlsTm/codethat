@@ -9,15 +9,19 @@ import QuestionPage from "./pages/QuestionPage";
 function Main() {
   return (
     <BrowserRouter>
-      <App>
-        <Routes>
-          <Route path="/" element={<HomePage />}></Route>
-          <Route path="courses" element={<CourseListPage />}></Route>
-          <Route path="courses/react-frontend-development" element={<CoursePage />}></Route>
-          <Route path="questions" element={<QuestionListPage />}></Route>
-          <Route path="questions/616825" element={<QuestionPage />}></Route>
-        </Routes>
-      </App>
+      <Routes>
+        <Route path="/" element={<App />}>
+          <Route index element={<HomePage />}></Route>
+          <Route path="courses">
+            <Route index element={<CourseListPage />}></Route>
+            <Route path="react-frontend-development" element={<CoursePage />}></Route>
+          </Route>
+          <Route path="questions">
+            <Route index element={<QuestionListPage />}></Route>
+            <Route path="616825" element={<QuestionPage />}></Route>
+          </Route>
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 }
