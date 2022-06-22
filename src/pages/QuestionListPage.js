@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { getQuestions } from '../api';
 import Avatar from '../components/Avatar';
 import Card from '../components/Card';
@@ -14,7 +15,7 @@ function QuestionItem({ question }) {
     <Card className={styles.questionItem} key={question.title}>
       <div className={styles.info}>
         <p className={styles.title}>
-          {question.title}
+          <Link to={`/questions/${question.id}`}>{question.title}</Link>
           {question.answers.length > 0 && (
             <span className={styles.count}>[{question.answers.length}]</span>
           )}

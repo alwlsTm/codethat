@@ -23,6 +23,10 @@
   color: #494949;
 }
 
+.questionItem .title a {
+  font-family: var(--notosans);
+}
+
 .questionItem .title .count {
   margin-left: 5px;
   color: #fe92ab;
