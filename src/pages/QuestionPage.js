@@ -6,6 +6,7 @@ import Card from '../components/Card';
 import Container from '../components/Container';
 import DateText from '../components/DateText';
 import styles from './QuestionPage.module.css';
+import Warn from '../components/Warn';
 
 //커뮤니티 질문 클릭 시 페이지
 //질문 & 답변
@@ -41,7 +42,7 @@ function QuestionPage() {
         <h2 className={styles.count}>
           {question.answers.length}개 답변
         </h2>
-        {question.answers.length > 0 && (
+        {question.answers.length > 0 ? (
           question.answers.map((answer) => (
             <Answer
               key={answer.id}
@@ -49,6 +50,11 @@ function QuestionPage() {
               answer={answer}
             />
           ))
+        ) : (
+          <Warn
+            title="답변을 기다리고 있어요."
+            description="이 질문의 첫 번째 답변을 달아주시겠어요?"
+          />
         )}
       </Container>
     </>
