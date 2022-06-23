@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { getQuestionById } from '../api';
 import classNames from 'classnames';
 import Avatar from '../components/Avatar';
@@ -13,6 +13,10 @@ import Warn from '../components/Warn';
 function QuestionPage() {
   const { questionId } = useParams(); //현재 페이지의 경로의 파라미터가 저장되어 있음
   const question = getQuestionById(questionId); //questionId 값에 따라서 알맞는 데이터를 렌더링
+
+  if (!question) {  //없는 질문일 경우
+    return <Navigate to="/questions" />;  //커뮤니티 페이지로 이동(리다이렉트)
+  }
 
   return (
     <>
