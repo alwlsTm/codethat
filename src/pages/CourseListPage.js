@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSearchParams } from 'react-router-dom';
 import { getCourses } from "../api";
 import CourseItem from "../components/CourseItem";
 import ListPage from '../components/ListPage';
@@ -8,10 +9,22 @@ import searchIcon from '../IMGS/search.svg';
 
 //카탈로그 페이지
 function CourseListPage() {
-  const [keyword, setKeyword] = useState(''); //검색 키워드 state
-  const courses = getCourses(); //코스 목록 데이터 불러오기
+  const [searchParams, setSearchParams] = useSearchParams();  //쿼리 스트링 파라미터 가져오기
+  const initKeyword = searchParams.get('keyword');  //keyword 값 가져오기
+  const [keyword, setKeyword] = useState(initKeyword || ''); //검색 키워드 state
+  const courses = getCourses(initKeyword); //코스 목록 데이터 불러오기
 
   const handleKeywordChange = (e) => setKeyword(e.target.value);
+
+  const handleSubmit = (e) => { //입력폼을 Submit 했을 때 url의 쿼리 스트링 변경
+    e.preventDefault();
+    setSearchParams(  //url의 쿼리 스트링 변경(파라미터로 객체를 받음)
+      keyword ?
+        {
+          keyword,
+        } : {}  //keyword 값이 없을 경우 빈 객체 전달
+    );
+  };
 
   return (
     <>
@@ -20,7 +33,7 @@ function CourseListPage() {
         title="모든 코스"
         description="자체 제작된 코스들로 기초를 쌓으세요."
       >
-        <form className={searchBarStyles.form} >
+        <form className={searchBarStyles.form} onSubmit={handleSubmit}>
           <input
             name="keyword"
             value={keyword}
