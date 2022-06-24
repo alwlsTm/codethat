@@ -10,3 +10,7 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+.emptyList {
+  margin: 40px auto;
+}
