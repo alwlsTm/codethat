@@ -2,6 +2,10 @@
   margin-top: 20px;
 }
 
+.emptyList {
+  margin: 40px auto;
+}
+
 .questionItem {
   display: flex;
   align-items: center;
