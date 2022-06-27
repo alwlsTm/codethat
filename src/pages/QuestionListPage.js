@@ -37,7 +37,7 @@ function QuestionItem({ question }) {
 
 //커뮤니티 페이지
 function QuestionListPage() {
-  const [searchParams, setSearchParams] = useSearchParams();  //
+  const [searchParams, setSearchParams] = useSearchParams();  //쿼리 값 가져오기
   const initKeyword = searchParams.get('keyword');  //keyword 값 가져오기
   const [keyword, setKeyword] = useState(initKeyword || ''); //검색 키워드 state
   const questions = getQuestions(initKeyword); //질문 리스트 불러오기
