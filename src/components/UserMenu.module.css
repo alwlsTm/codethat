@@ -46,3 +46,7 @@ ul.popup li.disabled {
   user-select: none;
   cursor: default;
 }
+
+.userMenu ul.popup a:hover {
+  text-decoration: none;
+}

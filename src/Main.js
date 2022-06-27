@@ -6,6 +6,7 @@ import QuestionListPage from "./pages/QuestionListPage";
 import CoursePage from "./pages/CoursePage";
 import QuestionPage from "./pages/QuestionPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import WishlistPage from "./pages/WishlistPage";
 
 function Main() {
   return (
@@ -21,6 +22,7 @@ function Main() {
             <Route index element={<QuestionListPage />}></Route>
             <Route path=":questionId" element={<QuestionPage />}></Route>
           </Route>
+          <Route path="wishlist" element={<WishlistPage />}></Route>
           <Route path="*" element={<NotFoundPage />}></Route>
         </Route>
       </Routes>

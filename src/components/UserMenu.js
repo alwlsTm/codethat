@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './UserMenu.module.css';
 import personIcon from '../IMGS/person.png';
 
@@ -29,7 +30,7 @@ function UserMenu() {
       </button>
       {isOpen && (
         <ul className={styles.popup}>
-          <li>위시리스트</li>
+          <Link to="/wishlist"><li>위시리스트</li></Link>
           <li className={styles.disabled}>회원가입</li>
           <li className={styles.disabled}>로그인</li>
         </ul>
