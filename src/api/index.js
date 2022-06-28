@@ -5,20 +5,39 @@ function filterByKeyword(items, keyword) {
   return items.filter(({ title }) => title.toLowerCase().includes(lowered));  //items의 title로 필터링
 }
 
-export function getCourses(keyword) {  //코스 목록 불러오기(카탈로그)
+//코스 목록 불러오기(카탈로그)
+export function getCourses(keyword) {
   if (!keyword) return data.courses;
   return filterByKeyword(data.courses, keyword);
 }
 
-export function getQuestions(keyword) {  //질문 목록 불러오기(커뮤니티)
+//코스 상세정보 불러오기(카탈로그)
+export function getCourseBySlug(courseSlug) {
+  return data.courses.find((course) => (course.slug === courseSlug));
+}
+
+//질문 목록 불러오기(커뮤니티)
+export function getQuestions(keyword) {
   if (!keyword) return data.questions;
   return filterByKeyword(data.questions, keyword);
 }
 
-export function getCourseBySlug(courseSlug) { //코스 상세정보 불러오기(카탈로그)
-  return data.courses.find((course) => (course.slug === courseSlug));
+//질문 내용 불러오기(커뮤니티)
+export function getQuestionById(questionId) {
+  return data.questions.find((question) => (question.id === questionId));
 }
 
-export function getQuestionById(questionId) { //질문 내용 불러오기(커뮤니티)
-  return data.questions.find((question) => (question.id === questionId));
+//위시리스트
+const WISHLIST_KEY = 'codethat-wishlist'; //key
+const wishlist = JSON.parse(localStorage.getItem(WISHLIST_KEY) || '{}');
+
+//위시리스트 추가
+export function addWishlist(courseSlug) {
+  wishlist[courseSlug] = true;  //코스 담기
+  localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlist)); //데이터 저장
+}
+
+//위시리스트 불러오기
+export function getWishlist() {
+  return data.courses.filter((course) => wishlist[course.slug]);
 }

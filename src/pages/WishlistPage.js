@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { getWishlist } from '../api';
 import Container from '../components/Container';
+import CourseItem from '../components/CourseItem';
 import Warn from '../components/Warn';
 import styles from './WishlistPage.module.css';
 
@@ -8,10 +10,15 @@ import styles from './WishlistPage.module.css';
 function WishlistPage() {
   const [courses, setCourses] = useState([]); //위시리스트 코스 state
 
+  useEffect(() => {
+    const nextCourses = getWishlist();  //위시리스트 불러오기
+    setCourses(nextCourses);
+  }, []);
+
   return (
     <Container className={styles.container}>
       <h1 className={styles.title}>나의 위시리스트</h1>
-      {courses.length === 0 && (
+      {courses.length === 0 ? (
         <>
           <Warn
             className={styles.emptyList}
@@ -24,6 +31,14 @@ function WishlistPage() {
             </Link>
           </div>
         </>
+      ) : (
+        <ul className={styles.items}>
+          {courses.map((course) => (
+            <li key={course.slug} className={styles.item}>
+              <CourseItem course={course} />
+            </li>
+          ))}
+        </ul>
       )}
     </Container>
   );

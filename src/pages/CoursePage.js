@@ -1,5 +1,5 @@
 import { Navigate, useParams } from 'react-router-dom';
-import { getCourseBySlug } from '../api';
+import { addWishlist, getCourseBySlug } from '../api';
 import Card from '../components/Card';
 import Container from '../components/Container';
 import CourseIcon from '../components/CourseIcon';
@@ -14,13 +14,19 @@ function CoursePage() {
     return <Navigate to="/courses" />;  //카탈로그 페이지로 이동(리다이렉트)
   }
 
+  const handleAddWishlistClick = () => {  //코스 담기
+    addWishlist(course.slug);  //위시리스트 추가
+  };
+
   return (
     <>
       <div className={styles.header}>
         <Container className={styles.content}>
           <CourseIcon photoUrl={course.photoUrl} />
           <h1 className={styles.title}>{course.title}</h1>
-          <button>+ 코스 담기</button>
+          <button onClick={handleAddWishlistClick}>
+            + 코스 담기
+          </button>
           <p className={styles.summary}>{course.summary}</p>
         </Container>
       </div>

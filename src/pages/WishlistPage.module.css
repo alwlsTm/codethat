@@ -7,7 +7,24 @@
   text-align: center;
 }
 
+.emptyList {
+  margin: 50px auto 30px;
+}
+
 .link {
   text-align: center;
   margin-top: 30px;
+}
+
+ul.items {
+  width: 30%;
+  min-width: 260px;
+  padding: 0;
+  margin: 0 auto;
+  list-style: none;
+}
+
+.item {
+  margin-bottom: 30px;
+  position: relative;
 }
