@@ -1,14 +1,21 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getWishlist } from '../api';
+import { deleteWishlist, getWishlist } from '../api';
 import Container from '../components/Container';
 import CourseItem from '../components/CourseItem';
 import Warn from '../components/Warn';
 import styles from './WishlistPage.module.css';
+import deleteButton from '../IMGS/closeButton.svg';
 
 //위시리스트 페이지
 function WishlistPage() {
   const [courses, setCourses] = useState([]); //위시리스트 코스 state
+
+  const handleDeleteClick = (courseSlug) => { //위시리스트 삭제
+    deleteWishlist(courseSlug);
+    const nextCourses = getWishlist();
+    setCourses(nextCourses);
+  };
 
   useEffect(() => {
     const nextCourses = getWishlist();  //위시리스트 불러오기
@@ -36,6 +43,12 @@ function WishlistPage() {
           {courses.map((course) => (
             <li key={course.slug} className={styles.item}>
               <CourseItem course={course} />
+              <img
+                className={styles.delete}
+                src={deleteButton}
+                alt="삭제"
+                onClick={() => handleDeleteClick(course.slug)}
+              ></img>
             </li>
           ))}
         </ul>

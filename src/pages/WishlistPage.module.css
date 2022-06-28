@@ -28,3 +28,15 @@ ul.items {
   margin-bottom: 30px;
   position: relative;
 }
+
+.delete {
+  display: none;
+  position: absolute;
+  top: 20px;
+  right: 5px;
+  cursor: pointer;
+}
+
+.item:hover .delete {
+  display: block;
+}

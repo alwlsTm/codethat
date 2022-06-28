@@ -37,6 +37,12 @@ export function addWishlist(courseSlug) {
   localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlist)); //데이터 저장
 }
 
+//위시리스트 삭제
+export function deleteWishlist(courseSlug) {
+  delete wishlist[courseSlug];  //코스 삭제
+  localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlist)); //데이터 저장
+}
+
 //위시리스트 불러오기
 export function getWishlist() {
   return data.courses.filter((course) => wishlist[course.slug]);
