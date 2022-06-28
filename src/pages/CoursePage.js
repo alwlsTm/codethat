@@ -1,4 +1,4 @@
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate, useParams, useNavigate } from 'react-router-dom';
 import { addWishlist, getCourseBySlug } from '../api';
 import Card from '../components/Card';
 import Container from '../components/Container';
@@ -9,6 +9,7 @@ import styles from './CoursePage.module.css';
 function CoursePage() {
   const { courseSlug } = useParams(); //현재 페이지의 경로의 파라미터가 저장되어 있음
   const course = getCourseBySlug(courseSlug); //courseSlug 값에 따라서 알맞는 데이터를 렌더링
+  const navigate = useNavigate();     //페이지 이동
 
   if (!course) {  //없는 코스일 경우
     return <Navigate to="/courses" />;  //카탈로그 페이지로 이동(리다이렉트)
@@ -16,6 +17,7 @@ function CoursePage() {
 
   const handleAddWishlistClick = () => {  //코스 담기
     addWishlist(course.slug);  //위시리스트 추가
+    navigate('/wishlist');     //코스 추가 시 위시리스트로 이동
   };
 
   return (
