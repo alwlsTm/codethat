@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { Link, useSearchParams } from 'react-router-dom';
 import { getQuestions } from '../api';
 import Avatar from '../components/Avatar';
@@ -56,6 +57,9 @@ function QuestionListPage() {
 
   return (
     <>
+      <Helmet>
+        <title>커뮤니티</title>
+      </Helmet>
       <ListPage
         variant="community"
         title="커뮤니티"

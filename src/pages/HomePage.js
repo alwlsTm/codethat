@@ -1,10 +1,14 @@
 import styles from './HomePage.module.css';
 import landingImg from '../IMGS/landing.svg';
 import Container from '../components/Container';
+import { Helmet } from 'react-helmet';
 
 function HomePage() {
   return (
     <>
+      <Helmet>
+        <title>codethat</title>
+      </Helmet>
       <div className={styles.bg}></div>
       <Container className={styles.container}>
         <div className={styles.texts}>
