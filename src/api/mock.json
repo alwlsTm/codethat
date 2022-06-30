@@ -964,7 +964,7 @@
           "writer": {
             "name": "신속배달",
             "profile": {
-              "photo": "/imgs/default_1.jpg"
+              "photo": "https://codeit-profile-images.s3.ap-northeast-2.amazonaws.com/default/default_2.jpg"
             },
             "level": "STONE"
           }
@@ -978,7 +978,7 @@
       "writer": {
         "name": "자바칩 프라푸치노",
         "profile": {
-          "photo": "/imgs/default_2.jpg"
+          "photo": "https://codeit-profile-images.s3.ap-northeast-2.amazonaws.com/default/default_2.jpg"
         },
         "level": "STONE"
       }
@@ -1037,7 +1037,7 @@
       "writer": {
         "name": "조던 워크",
         "profile": {
-          "photo": "/imgs/default_2.jpg"
+          "photo": "https://codeit-profile-images.s3.ap-northeast-2.amazonaws.com/default/default_2.jpg"
         },
         "level": "NEW"
       }
@@ -1052,7 +1052,7 @@
       "writer": {
         "name": "앨런 튜링",
         "profile": {
-          "photo": "/imgs/default_1.jpg"
+          "photo": "https://codeit-profile-images.s3.ap-northeast-2.amazonaws.com/default/default_2.jpg"
         },
         "level": "SUN"
       }
@@ -1069,7 +1069,7 @@
           "writer": {
             "name": "파이소닉",
             "profile": {
-              "photo": "/imgs/default_1.jpg"
+              "photo": "https://codeit-profile-images.s3.ap-northeast-2.amazonaws.com/default/default_2.jpg"
             },
             "level": "UNIVERSE"
           }
@@ -1097,7 +1097,7 @@
           "writer": {
             "name": "호랑이",
             "profile": {
-              "photo": "/imgs/default_2.jpg"
+              "photo": "https://codeit-profile-images.s3.ap-northeast-2.amazonaws.com/default/default_2.jpg"
             },
             "level": "UNIVERSE"
           }
@@ -1108,7 +1108,7 @@
       "writer": {
         "name": "리액트 초보",
         "profile": {
-          "photo": "/imgs/default_3.jpg"
+          "photo": "https://codeit-profile-images.s3.ap-northeast-2.amazonaws.com/default/default_2.jpg"
         },
         "level": "STONE"
       }
@@ -1136,7 +1136,7 @@
       "writer": {
         "name": "Soy Fried Chicken",
         "profile": {
-          "photo": "/imgs/default_3.jpg"
+          "photo": "https://codeit-profile-images.s3.ap-northeast-2.amazonaws.com/default/default_2.jpg"
         },
         "level": "SUN"
       }
@@ -1153,7 +1153,7 @@
           "writer": {
             "name": "호랑이",
             "profile": {
-              "photo": "/imgs/default_1.jpg"
+              "photo": "https://codeit-profile-images.s3.ap-northeast-2.amazonaws.com/default/default_2.jpg"
             },
             "level": "UNIVERSE"
           }
@@ -1164,7 +1164,7 @@
       "writer": {
         "name": "로드스터",
         "profile": {
-          "photo": "/imgs/default_1.jpg"
+          "photo": "https://codeit-profile-images.s3.ap-northeast-2.amazonaws.com/default/default_2.jpg"
         },
         "level": "ROCK"
       }
