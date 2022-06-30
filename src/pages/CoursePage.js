@@ -1,5 +1,6 @@
 import { Navigate, useParams, useNavigate } from 'react-router-dom';
 import { addWishlist, getCourseBySlug } from '../api';
+import Button from '../components/Button';
 import Card from '../components/Card';
 import Container from '../components/Container';
 import CourseIcon from '../components/CourseIcon';
@@ -26,9 +27,9 @@ function CoursePage() {
         <Container className={styles.content}>
           <CourseIcon photoUrl={course.photoUrl} />
           <h1 className={styles.title}>{course.title}</h1>
-          <button onClick={handleAddWishlistClick}>
+          <Button variant="round" onClick={handleAddWishlistClick}>
             + 코스 담기
-          </button>
+          </Button>
           <p className={styles.summary}>{course.summary}</p>
         </Container>
       </div>

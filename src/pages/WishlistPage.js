@@ -6,6 +6,7 @@ import CourseItem from '../components/CourseItem';
 import Warn from '../components/Warn';
 import styles from './WishlistPage.module.css';
 import deleteButton from '../IMGS/closeButton.svg';
+import Button from '../components/Button';
 
 //위시리스트 페이지
 function WishlistPage() {
@@ -34,7 +35,7 @@ function WishlistPage() {
           />
           <div className={styles.link}>
             <Link to="/courses">
-              <button>코스 찾아보기</button>
+              <Button>코스 찾아보기</Button>
             </Link>
           </div>
         </>

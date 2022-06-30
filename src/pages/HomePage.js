@@ -2,6 +2,7 @@ import styles from './HomePage.module.css';
 import landingImg from '../IMGS/landing.svg';
 import Container from '../components/Container';
 import { Helmet } from 'react-helmet';
+import Button from '../components/Button';
 
 function HomePage() {
   return (
@@ -24,7 +25,7 @@ function HomePage() {
             지금 함께 시작해보실래요?
           </p>
           <div>
-            <button>지금 시작하기</button>
+            <Button>지금 시작하기</Button>
           </div>
         </div>
         <div className={styles.figure}>
