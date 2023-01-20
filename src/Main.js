@@ -8,6 +8,7 @@ import QuestionPage from "./pages/QuestionPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import WishlistPage from "./pages/WishlistPage";
 import SignUpPage from "./pages/SignUpPage";
+import SignInPage from "./pages/SignInPage";
 
 function Main() {
   return (
@@ -25,6 +26,7 @@ function Main() {
           </Route>
           <Route path="wishlist" element={<WishlistPage />}></Route>
           <Route path="signUp" element={<SignUpPage />}></Route>
+          <Route path="signIn" element={<SignInPage />}></Route>
           <Route path="*" element={<NotFoundPage />}></Route>
         </Route>
       </Routes>

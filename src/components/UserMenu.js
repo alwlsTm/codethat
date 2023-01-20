@@ -32,7 +32,7 @@ function UserMenu() {
         <ul className={styles.popup}>
           <Link to="/wishlist"><li>위시리스트</li></Link>
           <Link to="/signUp"><li>회원가입</li></Link>
-          <li className={styles.disabled}>로그인</li>
+          <Link to="/signIn"><li>로그인</li></Link>
         </ul>
       )}
     </div>

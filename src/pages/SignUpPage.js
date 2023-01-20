@@ -23,9 +23,9 @@ function SignUpPage() {
       );
       setSignUpEmail("");
       setSignUpPassword("");
-      console.log(firebaseAuth);
+      //console.log(firebaseAuth);
     } catch (error) {
-      console.log(error);
+      //console.log(error);
       switch (error.code) {
         case 'auth/invalid-email':
           setErrorMsg("잘못된 이메일입니다.");
