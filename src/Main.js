@@ -25,8 +25,8 @@ function Main() {
             <Route path=":questionId" element={<QuestionPage />}></Route>
           </Route>
           <Route path="wishlist" element={<WishlistPage />}></Route>
-          <Route path="signUp" element={<SignUpPage />}></Route>
           <Route path="signIn" element={<SignInPage />}></Route>
+          <Route path="signUp" element={<SignUpPage />}></Route>
           <Route path="*" element={<NotFoundPage />}></Route>
         </Route>
       </Routes>

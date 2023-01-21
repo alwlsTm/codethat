@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { firebaseAuth } from "../firebase-config";
 import Container from "../components/Container";
 
@@ -26,8 +26,9 @@ function SignInPage() {
         signInPassword  //비밀번호
       );
       console.log(firebaseAuth);
-    } catch (err) {
-      switch (err.code) {
+    } catch (error) {
+      console.log(error);
+      switch (error.code) {
         case 'auth/invalid-email':
           setErrorMsg("이메일을 확인해 주세요.");
           break;
@@ -40,6 +41,12 @@ function SignInPage() {
       }
     }
   };
+
+  //로그아웃
+  const SignOutClick = async () => {
+    await signOut(firebaseAuth);
+    console.log(firebaseAuth);
+  }
 
   return (
     <div>
@@ -59,6 +66,7 @@ function SignInPage() {
           <div>User Logged In: {user?.email}</div>
           <button type="submit">로그인</button>
         </form>
+        <button onClick={SignOutClick}>로그아웃</button>
       </Container>
     </div>
   );
