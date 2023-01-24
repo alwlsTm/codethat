@@ -30,15 +30,15 @@ function SignUpPage() {
     try {
       setErrorMsg("");
       const pwd_check = password_check(signUpPassword, signUpPassword2); //비밀번호 확인
-      if (pwd_check) {  //일치
+      if (pwd_check) {  //비밀번호 일치
         await createUserWithEmailAndPassword(
           firebaseAuth,   //auth
           signUpEmail,    //이메일
           signUpPassword  //비밀번호
         );
-        navigate('/');
-        //console.log(firebaseAuth);
-      } else {  //불일치
+        navigate('/');  //회원가입 후 홈 이동
+        console.log(firebaseAuth);
+      } else {  //비밀번호 불일치
         setErrorMsg("비밀번호가 일치하지 않습니다.");
         setSignUpPassword("");
         setSignUpPassword2("");
