@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { firebaseAuth } from "../firebase-config";
 import Container from "../components/Container";
 import styles from './SignInPage.module.css';
@@ -34,7 +34,7 @@ function SignInPage() {
       navigate('/');  //로그인 후 홈 이동
       // console.log(firebaseAuth);
     } catch (error) {
-      // console.log(error);
+      console.log(error);
       switch (error.code) {
         case 'auth/invalid-email':
           setErrorMsg("이메일을 확인해 주세요.");
@@ -49,12 +49,6 @@ function SignInPage() {
       }
     }
   };
-
-  //로그아웃
-  const SignOutClick = async () => {
-    await signOut(firebaseAuth);
-    // console.log(firebaseAuth);
-  }
 
   return (
     <div>
@@ -80,7 +74,6 @@ function SignInPage() {
           <button type="submit">로그인</button>
         </form>
         <div>User Logged In: {user?.email}</div>
-        <button onClick={SignOutClick}>로그아웃</button>
       </Container>
     </div>
   );

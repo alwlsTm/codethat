@@ -33,6 +33,7 @@ ul.popup {
 ul.popup li {
   padding: 15px 19px;
   font-family: var(--noto-sans);
+  text-align: center;
 }
 
 ul.popup li:hover {
@@ -49,4 +50,13 @@ ul.popup li.disabled {
 
 .userMenu ul.popup a:hover {
   text-decoration: none;
+}
+
+ul.popup .signOut {
+  border-style: none;
+  background-color: #fff;
+}
+
+ul.popup .signOut:hover {
+  background-color: #f4f4f4;
 }
