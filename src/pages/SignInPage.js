@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { firebaseAuth } from "../firebase-config";
@@ -17,16 +17,11 @@ function SignInPage() {
 
   const signUpClick = () => navigate('/signUp');  //회원가입 페이지로 이동
 
-  //사용자의 로그인 상태
-  onAuthStateChanged(firebaseAuth, (currentUser) => {
-    setUser(currentUser);
-  })
-
   //로그인
   const signInSubmit = async (e) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(
+      await signInWithEmailAndPassword( //로그인
         firebaseAuth,   //auth
         signInEmail,    //이메일
         signInPassword  //비밀번호
@@ -34,7 +29,7 @@ function SignInPage() {
       navigate('/');  //로그인 후 홈 이동
       // console.log(firebaseAuth);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       switch (error.code) {
         case 'auth/invalid-email':
           setErrorMsg("이메일을 확인해 주세요.");
@@ -49,6 +44,12 @@ function SignInPage() {
       }
     }
   };
+
+  useEffect(() => {
+    onAuthStateChanged(firebaseAuth, (currentUser) => { //사용자의 로그인 상태
+      setUser(currentUser);
+    });
+  }, []);
 
   return (
     <div>
