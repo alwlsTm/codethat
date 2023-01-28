@@ -3,6 +3,7 @@ import landingImg from '../IMGS/landing.svg';
 import Container from '../components/Container';
 import { Helmet } from 'react-helmet';
 import Button from '../components/Button';
+import { Link } from 'react-router-dom';
 
 function HomePage() {
   return (
@@ -25,7 +26,9 @@ function HomePage() {
             지금 함께 시작해보실래요?
           </p>
           <div>
-            <Button>지금 시작하기</Button>
+            <Link to="/courses">
+              <Button>지금 시작하기</Button>
+            </Link>
           </div>
         </div>
         <div className={styles.figure}>

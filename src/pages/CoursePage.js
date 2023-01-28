@@ -4,6 +4,7 @@ import Button from '../components/Button';
 import Card from '../components/Card';
 import Container from '../components/Container';
 import CourseIcon from '../components/CourseIcon';
+import { firebaseAuth } from '../firebase-config';
 import styles from './CoursePage.module.css';
 
 //코스 클릭 시 상세정보 페이지
@@ -17,8 +18,12 @@ function CoursePage() {
   }
 
   const handleAddWishlistClick = () => {  //코스 담기
-    addWishlist(course.slug);  //위시리스트 추가
-    navigate('/wishlist');     //코스 추가 시 위시리스트로 이동
+    if (firebaseAuth.currentUser) { //사용자가 로그인 상태라면
+      addWishlist(course.slug);  //위시리스트 추가
+      navigate('/wishlist');     //코스 추가 시 위시리스트로 이동
+    } else {  //사용자가 로그인 상태가 아니라면
+      navigate('/signIn');
+    }
   };
 
   return (

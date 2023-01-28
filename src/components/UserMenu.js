@@ -36,7 +36,7 @@ function UserMenu() {
       <button className={styles.iconButton} onClick={handleButtonClick}>
         <img src={personIcon} alt="유저 메뉴"></img>
       </button>
-      {isOpen && firebaseAuth.currentUser ? ( //사용자가 로그인 했다면
+      {isOpen && firebaseAuth.currentUser ? ( //사용자가 로그인 상태라면
         <ul className={styles.popup}>
           <Link to="/wishlist"><li>위시리스트</li></Link>
           <button
@@ -45,7 +45,7 @@ function UserMenu() {
             disabled={!firebaseAuth.currentUser}
           ><li>로그아웃</li></button>
         </ul>
-      ) : (isOpen && !firebaseAuth.currentUser ?  //사용자가 로그인 하지 않았다면
+      ) : (isOpen && !firebaseAuth.currentUser ?  //사용자가 로그인 상태가 아니라면
         <ul className={styles.popup}>
           <Link to="/wishlist"><li>위시리스트</li></Link>
           <Link to="/signIn"><li>로그인</li></Link>
