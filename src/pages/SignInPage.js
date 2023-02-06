@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { firebaseAuth } from "../firebase-config";
 import Container from "../components/Container";
-import styles from './SignInPage.module.css';
+import Button from "../components/Button";
+import styles from './SignPage.module.css';
+import logo from '../IMGS/logo.svg';
 
 function SignInPage() {
   const [signInEmail, setSignInEmail] = useState("");
@@ -52,31 +54,39 @@ function SignInPage() {
   }, []);
 
   return (
-    <div>
-      <Container>
-        <div className={styles.text}>회원이 아니신가요?</div>
+    <Container className={styles.container}>
+      <Link to="/">
+        <img className={styles.logo} src={logo} alt="codethat"></img>
+      </Link>
+      <div className={styles.text}>
+        <div>회원이 아니신가요?</div>
         <div
-          onClick={signUpClick}
-          className={styles.signUp}>회원가입</div>
-        <form onSubmit={signInSubmit}>
+          className={styles.sign}
+          onClick={signUpClick}>회원가입</div>
+      </div>
+      <div>
+        <form className={styles.form} onSubmit={signInSubmit}>
           <input
+            autoFocus
+            className={styles.email}
             type="email"
             value={signInEmail}
             onChange={handleEmailChange}
             placeholder="이메일"
           ></input>
           <input
+            className={styles.password}
             type="password"
             value={signInPassword}
             onChange={handlePasswordChange}
             placeholder="비밀번호"
           ></input>
-          {errorMsg && <span>{errorMsg}</span>}
-          <button type="submit">로그인</button>
+          {errorMsg && <span className={styles.error}>{errorMsg}</span>}
+          <Button className={styles.submit}>로그인</Button>
         </form>
-        <div>User Logged In: {user?.email}</div>
-      </Container>
-    </div>
+        {/* <div>User Logged In: {user?.email}</div> */}
+      </div>
+    </Container>
   );
 }
 

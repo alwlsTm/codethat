@@ -1,0 +1,51 @@
+.container {
+  margin: 80px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  height: 40px;
+}
+
+.text {
+  display: flex;
+  margin-top: 10px;
+  font-size: medium;
+}
+
+.sign {
+  margin-left: 5px;
+  color: #6500c3;
+  cursor: pointer;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 25px;
+  align-items: center;
+}
+
+.email,
+.password,
+.submit {
+  width: 400px;
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+
+.email,
+.password {
+  font-size: 18px;
+  border-style: solid;
+  border-color: #c4c4c4;
+}
+
+.error {
+  color: #ff0000;
+  margin-top: 20px;
+}

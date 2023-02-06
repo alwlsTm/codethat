@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { firebaseAuth } from "../firebase-config";
 import Container from "../components/Container";
-import styles from './SignUpPage.module.css';
+import Button from "../components/Button";
+import styles from './SignPage.module.css';
+import logo from '../IMGS/logo.svg';
 
 //비밀번호 확인
 function password_check(pwd1, pwd2) {
@@ -63,36 +65,45 @@ function SignUpPage() {
   };
 
   return (
-    <div>
-      <Container>
-        <div className={styles.text}>이미 회원이신가요?</div>
+    <Container className={styles.container}>
+      <Link to="/">
+        <img className={styles.logo} src={logo} alt="codethat"></img>
+      </Link>
+      <div className={styles.text}>
+        <div>이미 회원이신가요?</div>
         <div
-          className={styles.signIn}
+          className={styles.sign}
           onClick={signInClick}>로그인</div>
-        <form onSubmit={signUpSubmit}>
+      </div>
+      <div>
+        <form className={styles.form} onSubmit={signUpSubmit}>
           <input
+            autoFocus
+            className={styles.email}
             type="email"
             value={signUpEmail}
             onChange={handleEmailChange}
             placeholder="이메일"
           ></input>
           <input
+            className={styles.password}
             type="password"
             value={signUpPassword}
             onChange={handlePasswordChange}
             placeholder="비밀번호"
           ></input>
           <input
+            className={styles.password}
             type="password"
             value={signUpPassword2}
             onChange={handlePasswordChange2}
             placeholder="비밀번호 확인"
           ></input>
-          {errorMsg && <span>{errorMsg}</span>}
-          <button type="submit">회원가입</button>
+          {errorMsg && <span className={styles.error}>{errorMsg}</span>}
+          <Button className={styles.submit}>회원가입</Button>
         </form>
-      </Container>
-    </div>
+      </div>
+    </Container>
   );
 }
 
