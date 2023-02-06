@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import styles from './Button.module.css';
 
-function Button({ children, variant, className, onClick }) {
+function Button({ children, variant, className }) {
   return (
     <button
       className={classNames(
@@ -9,7 +9,6 @@ function Button({ children, variant, className, onClick }) {
         variant && styles[variant],
         className,
       )}
-      onClick={onClick}
     >{children}</button>
   );
 }

@@ -1,5 +1,3 @@
-import { arrayUnion, doc, setDoc } from 'firebase/firestore';
-import { firebaseAuth, firebaseDB } from '../firebase-config';
 import { Navigate, useParams, useNavigate } from 'react-router-dom';
 import { addWishlist, getCourseBySlug } from '../api';
 import Button from '../components/Button';
@@ -18,21 +16,9 @@ function CoursePage() {
     return <Navigate to="/courses" />;  //카탈로그 페이지로 이동(리다이렉트)
   }
 
-  const handleAddWishlistClick = async () => {  //코스 담기
-    try {
-      if (firebaseAuth.currentUser) { //사용자가 로그인 상태라면
-        await setDoc(doc(
-          firebaseDB,
-          "wishlist/" + `${firebaseAuth.currentUser.email}` //path - wishlist/사용자 이메일
-        ), {
-          wishlist: arrayUnion(`${course.slug}`), //필드: 값
-        }, { merge: true });  //DB에 저장된 기존 위시리스트 배열과 병합
-      } else {  //사용자가 로그인 상태가 아니라면
-        navigate('/signIn');  //로그인 페이지로 이동
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  const handleAddWishlistClick = () => {  //코스 담기
+    addWishlist(course.slug);  //위시리스트 추가
+    navigate('/wishlist');     //코스 추가 시 위시리스트로 이동
   };
 
   return (
