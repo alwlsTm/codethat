@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { onValue, ref } from 'firebase/database';
+import { firebaseDB } from '../firebase-config';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link, useSearchParams } from 'react-router-dom';
-import { getQuestions } from '../api';
 import Avatar from '../components/Avatar';
 import Card from '../components/Card';
 import DateText from '../components/DateText';
@@ -18,7 +19,7 @@ function QuestionItem({ question }) {
       <div className={styles.info}>
         <p className={styles.title}>
           <Link to={`/questions/${question.id}`}>{question.title}</Link>
-          {question.answers.length > 0 && (
+          {Object(question.answers).length > 0 && (
             <span className={styles.count}>[{question.answers.length}]</span>
           )}
         </p>
@@ -38,10 +39,10 @@ function QuestionItem({ question }) {
 
 //커뮤니티 페이지
 function QuestionListPage() {
+  const [questions, setQuestions] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();  //쿼리 값 가져오기
   const initKeyword = searchParams.get('keyword');  //keyword 값 가져오기
   const [keyword, setKeyword] = useState(initKeyword || ''); //검색 키워드 state
-  const questions = getQuestions(initKeyword); //질문 리스트 불러오기
 
   const handleKeywordChange = (e) => setKeyword(e.target.value);
 
@@ -54,6 +55,14 @@ function QuestionListPage() {
         } : {}  //keyword 값이 없을 경우 빈 객체 전달
     );
   };
+
+  useEffect(() => {
+    const questionsRef = ref(firebaseDB, "questions");  //DB(커뮤니티) 레퍼런스
+    onValue(questionsRef, (snapshot) => { //레퍼런스에서 데이터 읽기
+      const question = snapshot.val();
+      setQuestions(question);
+    });
+  }, []);
 
   return (
     <>
@@ -88,7 +97,9 @@ function QuestionListPage() {
           ) : ( //검색 결과가 있으면
             <div className={styles.questionList}>
               {questions.map((question) => (
-                <QuestionItem key={question.id} question={question} />
+                <QuestionItem
+                  key={question.id}
+                  question={question} />
               ))}
             </div>
           )}
