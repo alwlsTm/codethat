@@ -11,6 +11,7 @@ import searchBarStyles from '../components/SearchBar.module.css';
 import Warn from '../components/Warn';
 import searchIcon from '../IMGS/search.svg';
 import styles from './QuestionListPage.module.css';
+import { filterByKeyword } from '../api';
 
 //질문 리스트 아이템
 function QuestionItem({ question }) {
@@ -39,7 +40,7 @@ function QuestionItem({ question }) {
 
 //커뮤니티 페이지
 function QuestionListPage() {
-  const [questions, setQuestions] = useState([]);
+  const [questions, setQuestions] = useState([]);   //질문 state
   const [searchParams, setSearchParams] = useSearchParams();  //쿼리 값 가져오기
   const initKeyword = searchParams.get('keyword');  //keyword 값 가져오기
   const [keyword, setKeyword] = useState(initKeyword || ''); //검색 키워드 state
@@ -60,9 +61,16 @@ function QuestionListPage() {
     const questionsRef = ref(firebaseDB, "questions");  //DB(커뮤니티) 레퍼런스
     onValue(questionsRef, (snapshot) => { //레퍼런스에서 데이터 읽기
       const question = snapshot.val();
-      setQuestions(question);
+      if (!initKeyword) { //키워드가 없다면
+        setQuestions(question); //전체 질문 리스트
+        console.log(question);
+      } else {  //키워드가 있다면
+        const filterItems = filterByKeyword(question, initKeyword); //필터링
+        setQuestions(filterItems);  //키워드로 필터된 질문
+        console.log(question);
+      }
     });
-  }, []);
+  }, [initKeyword]);
 
   return (
     <>

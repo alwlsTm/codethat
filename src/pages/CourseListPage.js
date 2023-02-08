@@ -9,6 +9,7 @@ import styles from './CourseListPage.module.css';
 import searchBarStyles from '../components/SearchBar.module.css';
 import searchIcon from '../IMGS/search.svg';
 import Warn from "../components/Warn";
+import { filterByKeyword } from "../api";
 
 //카탈로그 페이지
 function CourseListPage() {
@@ -33,9 +34,14 @@ function CourseListPage() {
     const coursesRef = ref(firebaseDB, "courses");  //DB(카탈로그) 레퍼런스
     onValue(coursesRef, (snapshot) => { //레퍼런스에서 데이터 읽기
       const course = snapshot.val();
-      setCourses(course);
+      if (!initKeyword) { //키워드가 없으면
+        setCourses(course); //코스 전체
+      } else {  //키워드가 있으면
+        const filterItems = filterByKeyword(course, initKeyword); //필터링
+        setCourses(filterItems);  //키워드로 필터된 코스
+      }
     });
-  }, []);
+  }, [initKeyword]);
 
   return (
     <>
