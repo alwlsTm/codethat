@@ -35,10 +35,10 @@ function CourseListPage() {
     onValue(coursesRef, (snapshot) => { //레퍼런스에서 데이터 읽기
       const course = snapshot.val();
       if (!initKeyword) { //키워드가 없으면
-        setCourses(course); //코스 전체
+        setCourses(course);
       } else {  //키워드가 있으면
         const filterItems = filterByKeyword(course, initKeyword); //필터링
-        setCourses(filterItems);  //키워드로 필터된 코스
+        setCourses(filterItems);
       }
     });
   }, [initKeyword]);

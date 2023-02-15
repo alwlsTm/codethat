@@ -62,11 +62,11 @@ function QuestionListPage() {
     onValue(questionsRef, (snapshot) => { //레퍼런스에서 데이터 읽기
       const question = snapshot.val();
       if (!initKeyword) { //키워드가 없다면
-        setQuestions(question); //전체 질문 리스트
+        setQuestions(question);
         console.log(question);
       } else {  //키워드가 있다면
         const filterItems = filterByKeyword(question, initKeyword); //필터링
-        setQuestions(filterItems);  //키워드로 필터된 질문
+        setQuestions(filterItems);
         console.log(question);
       }
     });

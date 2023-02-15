@@ -1,5 +1,8 @@
+import { onValue, ref } from 'firebase/database';
+import { firebaseDB } from '../firebase-config';
+import { useEffect, useState } from 'react';
 import { Navigate, useParams, useNavigate } from 'react-router-dom';
-import { addWishlist, getCourseBySlug } from '../api';
+import { addWishlist } from '../api';
 import Button from '../components/Button';
 import Card from '../components/Card';
 import Container from '../components/Container';
@@ -8,18 +11,28 @@ import styles from './CoursePage.module.css';
 
 //코스 클릭 시 상세정보 페이지
 function CoursePage() {
+  const [course, setCourse] = useState([]); //코스 state
   const { courseSlug } = useParams(); //현재 페이지의 경로의 파라미터가 저장되어 있음
-  const course = getCourseBySlug(courseSlug); //courseSlug 값에 따라서 알맞는 데이터를 렌더링
   const navigate = useNavigate();     //페이지 이동
 
-  if (!course) {  //없는 코스일 경우
-    return <Navigate to="/courses" />;  //카탈로그 페이지로 이동(리다이렉트)
-  }
-
   const handleAddWishlistClick = () => {  //코스 담기
-    addWishlist(course.slug);  //위시리스트 추가
-    navigate('/wishlist');     //코스 추가 시 위시리스트로 이동
+    addWishlist(course.slug);
+    navigate('/wishlist');
   };
+
+  useEffect(() => {
+    const courseRef = ref(firebaseDB, "courses"); //DB(카탈로그) 레퍼런스
+    onValue(courseRef, (snapshot) => {
+      const courses = snapshot.val();
+
+      const slug = courses.find((course) => course.slug === courseSlug);  //courseSlug 찾기
+      setCourse(slug);
+    });
+  }, [courseSlug]);
+
+  if (!course) {  //없는 코스일 경우
+    return <Navigate to="/courses" />;
+  }
 
   return (
     <>
@@ -34,7 +47,7 @@ function CoursePage() {
         </Container>
       </div>
       <Container className={styles.topics}>
-        {course.topics.map(({ topic }) => (
+        {course.topics?.map(({ topic }) => (
           <Card className={styles.topic} key={topic.slug}>
             <h3 className={styles.title}>{topic.title}</h3>
             <p className={styles.summary}>{topic.summary}</p>
