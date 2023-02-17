@@ -58,8 +58,7 @@ function CourseListPage() {
             name="keyword"
             value={keyword}
             onChange={handleKeywordChange}
-            placeholder="검색으로 코스 찾기"
-          >
+            placeholder="검색으로 코스 찾기">
           </input>
           <button type="submit">
             <img src={searchIcon} alt="검색"></img>

@@ -12,7 +12,7 @@ import styles from './CoursePage.module.css';
 //코스 클릭 시 상세정보 페이지
 function CoursePage() {
   const [course, setCourse] = useState([]); //코스 state
-  const { courseSlug } = useParams(); //현재 페이지의 경로의 파라미터가 저장되어 있음
+  const { courseSlug } = useParams(); //현재 페이지 경로의 courseSlug
   const navigate = useNavigate();     //페이지 이동
 
   const handleAddWishlistClick = () => {  //코스 담기
@@ -21,8 +21,8 @@ function CoursePage() {
   };
 
   useEffect(() => {
-    const courseRef = ref(firebaseDB, "courses"); //DB(카탈로그) 레퍼런스
-    onValue(courseRef, (snapshot) => {
+    const coursesRef = ref(firebaseDB, "courses"); //DB(카탈로그) 레퍼런스
+    onValue(coursesRef, (snapshot) => {
       const courses = snapshot.val();
 
       const slug = courses.find((course) => course.slug === courseSlug);  //courseSlug 찾기

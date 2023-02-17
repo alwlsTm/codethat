@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
-import { getQuestionById } from '../api';
+import { onValue, ref } from 'firebase/database';
+import { firebaseDB } from '../firebase-config';
 import classNames from 'classnames';
 import Avatar from '../components/Avatar';
 import Card from '../components/Card';
@@ -11,11 +13,21 @@ import Warn from '../components/Warn';
 //커뮤니티 질문 클릭 시 페이지
 //질문 & 답변
 function QuestionPage() {
-  const { questionId } = useParams(); //현재 페이지의 경로의 파라미터가 저장되어 있음
-  const question = getQuestionById(questionId); //questionId 값에 따라서 알맞는 데이터를 렌더링
+  const [question, setQuestion] = useState([]); //question state
+  const { questionId } = useParams(); //현재 페이지 경로의 questionId
+
+  useEffect(() => {
+    const questionsRef = ref(firebaseDB, "questions");  //DB(커뮤니티) 레퍼런스
+    onValue(questionsRef, (snapshot) => {
+      const questions = snapshot.val();
+
+      const id = questions.find((question) => (question.id === questionId));  //questionId 찾기
+      setQuestion(id);
+    });
+  }, [questionId]);
 
   if (!question) {  //없는 질문일 경우
-    return <Navigate to="/questions" />;  //커뮤니티 페이지로 이동(리다이렉트)
+    return <Navigate to="/questions" />;
   }
 
   return (
@@ -32,33 +44,32 @@ function QuestionPage() {
                   <DateText value={question.createdAt} />
                 </div>
               </div>
-              <Writer className={styles.author} writer={question.writer} />
+              <Writer
+                className={styles.author}
+                writer={question.writer} />
             </div>
             <p
               className={styles.content}
-              dangerouslySetInnerHTML={{ __html: question.content }}
-            >
+              dangerouslySetInnerHTML={{ __html: question.content }}>
             </p>
           </div>
         </Container>
       </div>
       <Container>
         <h2 className={styles.count}>
-          {question.answers.length}개 답변
+          {question.answers?.length}개 답변
         </h2>
-        {question.answers.length > 0 ? (
-          question.answers.map((answer) => (
+        {question.answers?.length > 0 ? (
+          question.answers?.map((answer) => (
             <Answer
-              key={answer.id}
+              key={answer.writer.name}
               className={styles.answerItem}
-              answer={answer}
-            />
+              answer={answer} />
           ))
         ) : (
           <Warn
             title="답변을 기다리고 있어요."
-            description="이 질문의 첫 번째 답변을 달아주시겠어요?"
-          />
+            description="이 질문의 첫 번째 답변을 달아주시겠어요?" />
         )}
       </Container>
     </>
@@ -70,10 +81,10 @@ function Writer({ className, writer }) {
   return (
     <div className={classNames(className, styles.writer)}>
       <div className={styles.info}>
-        <div className={styles.name}>{writer.name}</div>
-        <div className={styles.level}>{writer.level}</div>
+        <div className={styles.name}>{writer?.name}</div>
+        <div className={styles.level}>{writer?.level}</div>
       </div>
-      <Avatar photo={writer.profile.photo} name={writer.name} />
+      <Avatar photo={writer?.profile.photo} name={writer?.name} />
     </div>
   );
 }

@@ -20,8 +20,10 @@ function QuestionItem({ question }) {
       <div className={styles.info}>
         <p className={styles.title}>
           <Link to={`/questions/${question.id}`}>{question.title}</Link>
-          {Object(question.answers).length > 0 && (
-            <span className={styles.count}>[{question.answers.length}]</span>
+          {question.answers?.length > 0 && (
+            <span className={styles.count}>
+              [{question.answers.length}]
+            </span>
           )}
         </p>
         <p className={styles.date}>
@@ -61,13 +63,13 @@ function QuestionListPage() {
     const questionsRef = ref(firebaseDB, "questions");  //DB(커뮤니티) 레퍼런스
     onValue(questionsRef, (snapshot) => { //레퍼런스에서 데이터 읽기
       const question = snapshot.val();
+
       if (!initKeyword) { //키워드가 없다면
         setQuestions(question);
         console.log(question);
       } else {  //키워드가 있다면
         const filterItems = filterByKeyword(question, initKeyword); //필터링
         setQuestions(filterItems);
-        console.log(question);
       }
     });
   }, [initKeyword]);
@@ -87,8 +89,7 @@ function QuestionListPage() {
             name="keyword"
             value={keyword}
             onChange={handleKeywordChange}
-            placeholder="검색으로 질문 찾기"
-          >
+            placeholder="검색으로 질문 찾기">
           </input>
           <button type="submit">
             <img src={searchIcon} alt="검색"></img>

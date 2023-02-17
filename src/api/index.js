@@ -5,11 +5,6 @@ export function filterByKeyword(items, keyword) {
   return items.filter(({ title }) => title.toLowerCase().includes(lowered));  //items의 title로 필터링
 }
 
-//질문 내용 불러오기(커뮤니티)
-export function getQuestionById(questionId) {
-  return data.questions.find((question) => (question.id === questionId));
-}
-
 //위시리스트
 const WISHLIST_KEY = 'codethat-wishlist'; //key
 const wishlist = JSON.parse(localStorage.getItem(WISHLIST_KEY) || '{}');
