@@ -1,8 +1,7 @@
-import { onValue, ref } from 'firebase/database';
-import { firebaseDB } from '../firebase-config';
+import { onValue, push, ref } from 'firebase/database';
+import { firebaseAuth, firebaseDB } from '../firebase-config';
 import { useEffect, useState } from 'react';
 import { Navigate, useParams, useNavigate } from 'react-router-dom';
-import { addWishlist } from '../api';
 import Button from '../components/Button';
 import Card from '../components/Card';
 import Container from '../components/Container';
@@ -16,8 +15,17 @@ function CoursePage() {
   const navigate = useNavigate();     //페이지 이동
 
   const handleAddWishlistClick = () => {  //코스 담기
-    addWishlist(course.slug);
-    navigate('/wishlist');
+    if (firebaseAuth.currentUser) { //사용자가 로그인 상태라면
+      const userEmail = firebaseAuth.currentUser.email.replace('.', '');
+      const wishlistRef = ref(firebaseDB, "wishlist/" + userEmail); //DB(위시리스트) 레퍼런스
+
+      push(wishlistRef, {
+        wishlist: course,
+      });
+      navigate('/wishlist');
+    } else {  //로그인 상태가 아니라면
+      navigate('/signIn');
+    }
   };
 
   useEffect(() => {
