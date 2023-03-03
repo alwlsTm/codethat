@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { deleteWishlist, getWishlist } from '../api';
+import { onAuthStateChanged } from 'firebase/auth';
+import { onValue, ref } from 'firebase/database';
+import { firebaseAuth, firebaseDB } from '../firebase-config';
 import Container from '../components/Container';
 import CourseItem from '../components/CourseItem';
 import Warn from '../components/Warn';
@@ -11,6 +14,7 @@ import Button from '../components/Button';
 //위시리스트 페이지
 function WishlistPage() {
   const [courses, setCourses] = useState([]); //위시리스트 코스 state
+  const navigate = useNavigate();
 
   const handleDeleteClick = (courseSlug) => { //위시리스트 삭제
     deleteWishlist(courseSlug);
@@ -19,8 +23,19 @@ function WishlistPage() {
   };
 
   useEffect(() => {
-    const nextCourses = getWishlist();  //위시리스트 불러오기
-    setCourses(nextCourses);
+    onAuthStateChanged(firebaseAuth, (currentUser) => {
+      if (currentUser) {  //사용자가 로그인 상태라면
+        const userEmail = currentUser.email.replace('.', '');
+        const wishlistRef = ref(firebaseDB, "wishlist/" + userEmail); //DB(위시리스트) 레퍼런스
+
+        onValue(wishlistRef, (snapshot) => {
+          const wishlist = snapshot.val();
+          setCourses(wishlist);
+        });
+      } else {  //로그인 상태가 아니라면
+        navigate('/signIn');
+      }
+    });
   }, []);
 
   return (
@@ -31,8 +46,7 @@ function WishlistPage() {
           <Warn
             className={styles.emptyList}
             title="담아 놓은 코스가 없어요."
-            description="카탈로그에서 나에게 필요한 코스를 찾아보세요."
-          />
+            description="카탈로그에서 나에게 필요한 코스를 찾아보세요." />
           <div className={styles.link}>
             <Link to="/courses">
               <Button>코스 찾아보기</Button>
@@ -41,15 +55,15 @@ function WishlistPage() {
         </>
       ) : (
         <ul className={styles.items}>
-          {courses.map((course) => (
-            <li key={course.slug} className={styles.item}>
-              <CourseItem course={course} />
+          {Object.entries(courses).map(([key, value]) => (
+            <li key={value.wishlist.slug} className={styles.item}>
+              <CourseItem course={value.wishlist} />
               <img
                 className={styles.delete}
                 src={deleteButton}
                 alt="삭제"
-                onClick={() => handleDeleteClick(course.slug)}
-              ></img>
+                onClick={() => handleDeleteClick(key)}>
+              </img>
             </li>
           ))}
         </ul>
