@@ -19,8 +19,8 @@ function CoursePage() {
       const userEmail = firebaseAuth.currentUser.email.replace('.', '');
       const wishlistRef = ref(firebaseDB, "wishlist/" + userEmail); //DB(위시리스트) 레퍼런스
 
-      push(wishlistRef, {
-        wishlist: course,
+      push(wishlistRef, { //자동으로 고유 key 생성
+        wishlist: course, //path - wishlist/userEmail/key/wishlist
       });
       navigate('/wishlist');
     } else {  //로그인 상태가 아니라면

@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { deleteWishlist, getWishlist } from '../api';
 import { onAuthStateChanged } from 'firebase/auth';
-import { onValue, ref } from 'firebase/database';
+import { onValue, ref, remove } from 'firebase/database';
 import { firebaseAuth, firebaseDB } from '../firebase-config';
 import Container from '../components/Container';
 import CourseItem from '../components/CourseItem';
@@ -16,10 +15,10 @@ function WishlistPage() {
   const [courses, setCourses] = useState([]); //위시리스트 코스 state
   const navigate = useNavigate();
 
-  const handleDeleteClick = (courseSlug) => { //위시리스트 삭제
-    deleteWishlist(courseSlug);
-    const nextCourses = getWishlist();
-    setCourses(nextCourses);
+  const handleDeleteClick = (courseKey) => { //위시리스트 삭제
+    const userEmail = firebaseAuth.currentUser.email.replace('.', '');
+    const wishlistRef = ref(firebaseDB, "wishlist/" + userEmail + `/${courseKey}`);
+    remove(wishlistRef);  //key를 이용해 위시리스트 삭제
   };
 
   useEffect(() => {
@@ -30,7 +29,7 @@ function WishlistPage() {
 
         onValue(wishlistRef, (snapshot) => {
           const wishlist = snapshot.val();
-          setCourses(wishlist);
+          setCourses(wishlist); //{key: {wishlist: ... }}
         });
       } else {  //로그인 상태가 아니라면
         navigate('/signIn');
