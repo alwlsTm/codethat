@@ -29,7 +29,11 @@ function WishlistPage() {
 
         onValue(wishlistRef, (snapshot) => {
           const wishlist = snapshot.val();
-          setCourses(wishlist); //{key: {wishlist: ... }}
+          if (wishlist) {
+            setCourses(wishlist); //{key: {wishlist: ... }}
+          } else {
+            setCourses([]);
+          }
         });
       } else {  //로그인 상태가 아니라면
         navigate('/signIn');
@@ -55,7 +59,7 @@ function WishlistPage() {
       ) : (
         <ul className={styles.items}>
           {Object.entries(courses).map(([key, value]) => (
-            <li key={value.wishlist.slug} className={styles.item}>
+            <li key={key} className={styles.item}>
               <CourseItem course={value.wishlist} />
               <img
                 className={styles.delete}

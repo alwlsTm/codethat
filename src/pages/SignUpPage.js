@@ -46,7 +46,6 @@ function SignUpPage() {
         setSignUpPassword2("");
       }
     } catch (error) {
-      //console.log(error);
       switch (error.code) {
         case 'auth/invalid-email':
           setErrorMsg("잘못된 이메일입니다.");

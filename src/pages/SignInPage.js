@@ -11,7 +11,6 @@ function SignInPage() {
   const [signInEmail, setSignInEmail] = useState("");
   const [signInPassword, setSignInPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const [user, setUser] = useState({});
   const navigate = useNavigate();
 
   const handleEmailChange = (e) => setSignInEmail(e.target.value);
@@ -29,9 +28,7 @@ function SignInPage() {
         signInPassword  //비밀번호
       );
       navigate('/');  //로그인 후 홈 이동
-      // console.log(firebaseAuth);
     } catch (error) {
-      // console.log(error);
       switch (error.code) {
         case 'auth/invalid-email':
           setErrorMsg("이메일을 확인해 주세요.");
@@ -46,12 +43,6 @@ function SignInPage() {
       }
     }
   };
-
-  useEffect(() => {
-    onAuthStateChanged(firebaseAuth, (currentUser) => { //사용자의 로그인 상태
-      setUser(currentUser);
-    });
-  }, []);
 
   return (
     <Container className={styles.container}>
@@ -84,7 +75,6 @@ function SignInPage() {
           {errorMsg && <span className={styles.error}>{errorMsg}</span>}
           <Button className={styles.submit}>로그인</Button>
         </form>
-        {/* <div>User Logged In: {user?.email}</div> */}
       </div>
     </Container>
   );

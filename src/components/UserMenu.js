@@ -17,7 +17,6 @@ function UserMenu() {
   //로그아웃
   const SignOutClick = async () => {
     await signOut(firebaseAuth);
-    // console.log(firebaseAuth);
   }
 
   useEffect(() => {
