@@ -20,7 +20,6 @@ function QuestionPage() {
     const questionsRef = ref(firebaseDB, "questions");  //DB(커뮤니티) 레퍼런스
     onValue(questionsRef, (snapshot) => {
       const questions = snapshot.val();
-
       const id = questions.find((question) => (question.id === questionId));  //questionId 찾기
       setQuestion(id);
     });
@@ -37,16 +36,15 @@ function QuestionPage() {
           <div className={styles.question}>
             <div className={styles.questionInfo}>
               <div className={styles.content}>
-                <div className={styles.title}>
-                  {question.title}
-                </div>
+                <div className={styles.title}>{question.title}</div>
                 <div className={styles.date}>
                   <DateText value={question.createdAt} />
                 </div>
               </div>
               <Writer
                 className={styles.author}
-                writer={question.writer} />
+                writer={question.writer}
+              />
             </div>
             <p
               className={styles.content}
@@ -64,12 +62,14 @@ function QuestionPage() {
             <Answer
               key={answer.writer.name}
               className={styles.answerItem}
-              answer={answer} />
+              answer={answer}
+            />
           ))
         ) : (
           <Warn
             title="답변을 기다리고 있어요."
-            description="이 질문의 첫 번째 답변을 달아주시겠어요?" />
+            description="이 질문의 첫 번째 답변을 달아주시겠어요?"
+          />
         )}
       </Container>
     </>

@@ -1,7 +1,9 @@
 import { onValue, push, ref } from 'firebase/database';
-import { firebaseAuth, firebaseDB } from '../firebase-config';
+import { firebaseDB } from '../firebase-config';
 import { useEffect, useState } from 'react';
 import { Navigate, useParams, useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { userAtom } from '../recoil/userAtom';
 import Button from '../components/Button';
 import Card from '../components/Card';
 import Container from '../components/Container';
@@ -11,18 +13,19 @@ import styles from './CoursePage.module.css';
 //코스 클릭 시 상세정보 페이지
 function CoursePage() {
   const [course, setCourse] = useState([]); //코스 state
-  const [isValue, setIsValue] = useState([]); //위시리스트 체크 state
-  const { courseSlug } = useParams(); //현재 페이지 경로의 courseSlug
-  const navigate = useNavigate();     //페이지 이동
+  const [value, setValue] = useState([]);   //위시리스트 체크 state
+  const { courseSlug } = useParams();       //현재 페이지 경로의 courseSlug
+  const user = useRecoilValue(userAtom);
+  const navigate = useNavigate();           //페이지 이동
 
   const handleAddWishlistClick = () => {  //코스 담기
-    if (firebaseAuth.currentUser) { //사용자가 로그인 상태라면
-      const userEmail = firebaseAuth.currentUser.email.replace('.', '');
-      const wishlistRef = ref(firebaseDB, "wishlist/" + userEmail); //DB(위시리스트) 레퍼런스
+    if (user) {
+      const wishlistRef = ref(firebaseDB, "wishlist/" + user); //DB(위시리스트) 레퍼런스
 
+      //path - wishlist/userEmail/고유key/wishlist(slug, wishlist)
       push(wishlistRef, { //자동으로 고유key 생성
         slug: courseSlug,
-        wishlist: course, //path - wishlist/userEmail/고유key/wishlist
+        wishlist: course,
       });
       navigate('/wishlist');
     } else {  //로그인 상태가 아니라면
@@ -34,7 +37,7 @@ function CoursePage() {
     navigate('/wishlist');
   };
 
-  useEffect(() => {
+  useEffect(() => { //코스 찾기
     const coursesRef = ref(firebaseDB, "courses"); //DB(카탈로그) 레퍼런스
     onValue(coursesRef, (snapshot) => {
       const courses = snapshot.val();
@@ -43,20 +46,18 @@ function CoursePage() {
     });
   }, [courseSlug]);
 
-  useEffect(() => {
-    if (firebaseAuth.currentUser) {
-      const userEmail = firebaseAuth.currentUser.email.replace('.', '');
-      const wishlistRef = ref(firebaseDB, "wishlist/" + userEmail);
-
+  useEffect(() => { //위시리스트 체크
+    if (user) {
+      const wishlistRef = ref(firebaseDB, "wishlist/" + user);
       onValue(wishlistRef, (snapshot) => {
         if (snapshot.val()) {
           const wishlist = Object.values(snapshot.val());
-          const value = wishlist.filter((val) => val.slug === courseSlug);  //
-          setIsValue(value);
+          const value = wishlist.find((val) => val.slug === courseSlug);  //위시리스트에 담겨있는 코스인지 체크
+          setValue(value);
         }
       });
     }
-  }, [courseSlug]);
+  }, [user, courseSlug]);
 
   if (!course) {  //없는 코스일 경우
     return <Navigate to="/courses" />;
@@ -68,13 +69,13 @@ function CoursePage() {
         <Container className={styles.content}>
           <CourseIcon photoUrl={course.photoUrl} />
           <h1 className={styles.title}>{course.title}</h1>
-          {isValue.length === 0 ? (
-            <Button variant="round" onClick={handleAddWishlistClick}>
-              + 코스 담기
-            </Button>
-          ) : (
+          {user && value ? (
             <Button variant="round" onClick={handleWishlistClick}>
               위시리스트로 이동
+            </Button>
+          ) : (
+            <Button variant="round" onClick={handleAddWishlistClick}>
+              + 코스 담기
             </Button>
           )}
           <p className={styles.summary}>{course.summary}</p>

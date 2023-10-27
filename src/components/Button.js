@@ -10,7 +10,9 @@ function Button({ children, variant, className, onClick }) {
         className,
       )}
       onClick={onClick}
-    >{children}</button>
+    >
+      {children}
+    </button>
   );
 }
 

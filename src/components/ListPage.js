@@ -34,7 +34,6 @@ function ListPage({
       </div>
       <Container className={styles.container}>{children}</Container>
     </>
-
   );
 }
 

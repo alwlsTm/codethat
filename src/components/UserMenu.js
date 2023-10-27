@@ -2,21 +2,24 @@ import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { firebaseAuth } from '../firebase-config';
+import { useSetRecoilState } from 'recoil';
+import { userAtom } from '../recoil/userAtom';
 import styles from './UserMenu.module.css';
 import personIcon from '../IMGS/person.png';
 
 //Nav 유저 메뉴
 function UserMenu() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);  //팝업 state
+  const setUser = useSetRecoilState(userAtom);  //유저 state
 
   const handleButtonClick = useCallback((e) => { //유저 메뉴 클릭
     e.stopPropagation();  //기본 동작 막기
     setIsOpen((nextIsOpen) => !nextIsOpen);
   }, []);
 
-  //로그아웃
-  const SignOutClick = async () => {
+  const SignOutClick = async () => {  //로그아웃
     await signOut(firebaseAuth);
+    setUser("");
   }
 
   useEffect(() => {
@@ -42,7 +45,9 @@ function UserMenu() {
             className={styles.signOut}
             onClick={SignOutClick}
             disabled={!firebaseAuth.currentUser}
-          ><li>로그아웃</li></button>
+          >
+            <li>로그아웃</li>
+          </button>
         </ul>
       ) : (isOpen && !firebaseAuth.currentUser ?  //사용자가 로그인 하지 않았다면
         <ul className={styles.popup}>

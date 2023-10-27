@@ -45,11 +45,11 @@ function QuestionListPage() {
   const [questions, setQuestions] = useState([]);   //질문 state
   const [searchParams, setSearchParams] = useSearchParams();  //쿼리 값 가져오기
   const initKeyword = searchParams.get('keyword');  //keyword 값 가져오기
-  const [keyword, setKeyword] = useState(initKeyword || ''); //검색 키워드 state
+  const [keyword, setKeyword] = useState(initKeyword || '');  //검색 키워드 state
 
   const handleKeywordChange = (e) => setKeyword(e.target.value);
 
-  const handleSubmit = (e) => { //입력폼을 Submit 했을 때 url의 쿼리 스트링 변경
+  const handleSubmit = (e) => { //입력폼 Submit시 url의 쿼리 스트링 변경
     e.preventDefault();
     setSearchParams(  //url의 쿼리 스트링 변경(파라미터로 객체를 받음)
       keyword ?
@@ -66,7 +66,6 @@ function QuestionListPage() {
 
       if (!initKeyword) { //키워드가 없다면
         setQuestions(question);
-        console.log(question);
       } else {  //키워드가 있다면
         const filterItems = filterByKeyword(question, initKeyword); //필터링
         setQuestions(filterItems);
@@ -108,7 +107,8 @@ function QuestionListPage() {
               {questions.map((question) => (
                 <QuestionItem
                   key={question.id}
-                  question={question} />
+                  question={question}
+                />
               ))}
             </div>
           )}

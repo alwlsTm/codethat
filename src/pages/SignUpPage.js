@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { firebaseAuth } from "../firebase-config";
+import { useSetRecoilState } from "recoil";
+import { userAtom } from "../recoil/userAtom";
 import Container from "../components/Container";
 import Button from "../components/Button";
 import styles from './SignPage.module.css';
@@ -18,6 +20,7 @@ function SignUpPage() {
   const [signUpPassword, setSignUpPassword] = useState("");   //비밀번호 state
   const [signUpPassword2, setSignUpPassword2] = useState(""); //비밀번호 확인 state
   const [errorMsg, setErrorMsg] = useState("");               //에러 메시지 state
+  const setUser = useSetRecoilState(userAtom);  //유저 state
   const navigate = useNavigate();
 
   const handleEmailChange = (e) => setSignUpEmail(e.target.value);
@@ -32,14 +35,15 @@ function SignUpPage() {
     try {
       setErrorMsg("");
       const pwd_check = password_check(signUpPassword, signUpPassword2); //비밀번호 확인
-      if (pwd_check) {  //비밀번호 일치
-        await createUserWithEmailAndPassword(
+      if (pwd_check) {    //비밀번호 일치
+        const signUpUser = await createUserWithEmailAndPassword(
           firebaseAuth,   //auth
           signUpEmail,    //이메일
           signUpPassword  //비밀번호
         );
+        const user = signUpUser.user.email.split('@');
+        setUser(user[0]);
         navigate('/');  //회원가입 후 홈 이동
-        console.log(firebaseAuth);
       } else {  //비밀번호 불일치
         setErrorMsg("비밀번호가 일치하지 않습니다.");
         setSignUpPassword("");
@@ -70,34 +74,29 @@ function SignUpPage() {
       </Link>
       <div className={styles.text}>
         <div>이미 회원이신가요?</div>
-        <div
-          className={styles.sign}
-          onClick={signInClick}>로그인</div>
+        <div className={styles.sign} onClick={signInClick}>로그인</div>
       </div>
       <div>
         <form className={styles.form} onSubmit={signUpSubmit}>
           <input
             autoFocus
-            className={styles.email}
             type="email"
             value={signUpEmail}
             onChange={handleEmailChange}
-            placeholder="이메일"
-          ></input>
+            placeholder="이메일">
+          </input>
           <input
-            className={styles.password}
             type="password"
             value={signUpPassword}
             onChange={handlePasswordChange}
-            placeholder="비밀번호"
-          ></input>
+            placeholder="비밀번호">
+          </input>
           <input
-            className={styles.password}
             type="password"
             value={signUpPassword2}
             onChange={handlePasswordChange2}
-            placeholder="비밀번호 확인"
-          ></input>
+            placeholder="비밀번호 확인">
+          </input>
           {errorMsg && <span className={styles.error}>{errorMsg}</span>}
           <Button className={styles.submit}>회원가입</Button>
         </form>

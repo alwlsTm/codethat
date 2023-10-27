@@ -51,7 +51,11 @@ const ICONS = {
 
 function CourseIcon({ className, photoUrl = 'default' }) {
   return (
-    <img className={classNames(styles.courseIcon, className)} src={ICONS[photoUrl]} alt={photoUrl}></img>
+    <img
+      className={classNames(styles.courseIcon, className)}
+      src={ICONS[photoUrl]}
+      alt={photoUrl}>
+    </img>
   );
 }
 
