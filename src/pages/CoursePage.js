@@ -52,7 +52,7 @@ function CoursePage() {
       onValue(wishlistRef, (snapshot) => {
         if (snapshot.val()) {
           const wishlist = Object.values(snapshot.val());
-          const value = wishlist.find((val) => val.slug === courseSlug);  //위시리스트에 담겨있는 코스인지 체크
+          const value = wishlist.filter((val) => val.slug === courseSlug);  //위시리스트에 담겨있는 코스인지 체크
           setValue(value);
         }
       });
@@ -69,13 +69,13 @@ function CoursePage() {
         <Container className={styles.content}>
           <CourseIcon photoUrl={course.photoUrl} />
           <h1 className={styles.title}>{course.title}</h1>
-          {user && value ? (
-            <Button variant="round" onClick={handleWishlistClick}>
-              위시리스트로 이동
-            </Button>
-          ) : (
+          {value.length === 0 ? (
             <Button variant="round" onClick={handleAddWishlistClick}>
               + 코스 담기
+            </Button>
+          ) : (
+            <Button variant="round" onClick={handleWishlistClick}>
+              위시리스트로 이동
             </Button>
           )}
           <p className={styles.summary}>{course.summary}</p>

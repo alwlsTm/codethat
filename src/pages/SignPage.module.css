@@ -2,7 +2,6 @@
   margin: 80px auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 
@@ -13,7 +12,7 @@
 .text {
   display: flex;
   margin-top: 10px;
-  font-size: medium;
+  font-size: 16px;
 }
 
 .sign {
@@ -25,7 +24,7 @@
 .form {
   display: flex;
   flex-direction: column;
-  margin-top: 25px;
+  margin-top: 20px;
   align-items: center;
 }
 
@@ -38,7 +37,7 @@ input:is([type="email"], [type="password"]),
 }
 
 input:is([type="email"], [type="password"]) {
-  font-size: 18px;
+  font-size: 17px;
   border-style: solid;
   border-color: #c4c4c4;
 }

@@ -44,7 +44,6 @@ ul.popup li:hover {
 ul.popup li.disabled {
   background-color: #fff;
   color: #c4c4c4;
-  user-select: none;
   cursor: default;
 }
 
@@ -53,10 +52,8 @@ ul.popup li.disabled {
 }
 
 ul.popup .signOut {
+  width: 100%;
+  padding: 0;
   border-style: none;
-  background-color: #fff;
-}
-
-ul.popup .signOut:hover {
-  background-color: #f4f4f4;
+  background-color: inherit;
 }

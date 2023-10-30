@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { firebaseAuth } from "../firebase-config";
 import { useSetRecoilState } from "recoil";
@@ -54,32 +54,28 @@ function SignInPage() {
 
   return (
     <Container className={styles.container}>
-      <Link to="/">
-        <img className={styles.logo} src={logo} alt="codethat"></img>
-      </Link>
+      <img className={styles.logo} src={logo} alt="codethat"></img>
       <div className={styles.text}>
         <div>회원이 아니신가요?</div>
         <div className={styles.sign} onClick={signUpClick}>회원가입</div>
       </div>
-      <div>
-        <form className={styles.form} onSubmit={signInSubmit}>
-          <input
-            autoFocus
-            type="email"
-            value={signInEmail}
-            onChange={handleEmailChange}
-            placeholder="이메일">
-          </input>
-          <input
-            type="password"
-            value={signInPassword}
-            onChange={handlePasswordChange}
-            placeholder="비밀번호">
-          </input>
-          {errorMsg && <span className={styles.error}>{errorMsg}</span>}
-          <Button className={styles.submit}>로그인</Button>
-        </form>
-      </div>
+      <form className={styles.form} onSubmit={signInSubmit}>
+        <input
+          autoFocus
+          type="email"
+          value={signInEmail}
+          onChange={handleEmailChange}
+          placeholder="이메일">
+        </input>
+        <input
+          type="password"
+          value={signInPassword}
+          onChange={handlePasswordChange}
+          placeholder="비밀번호">
+        </input>
+        {errorMsg && <span className={styles.error}>{errorMsg}</span>}
+        <Button className={styles.submit}>로그인</Button>
+      </form>
     </Container>
   );
 }

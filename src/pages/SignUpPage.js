@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { firebaseAuth } from "../firebase-config";
 import { useSetRecoilState } from "recoil";
@@ -69,38 +69,34 @@ function SignUpPage() {
 
   return (
     <Container className={styles.container}>
-      <Link to="/">
-        <img className={styles.logo} src={logo} alt="codethat"></img>
-      </Link>
+      <img className={styles.logo} src={logo} alt="codethat"></img>
       <div className={styles.text}>
         <div>이미 회원이신가요?</div>
         <div className={styles.sign} onClick={signInClick}>로그인</div>
       </div>
-      <div>
-        <form className={styles.form} onSubmit={signUpSubmit}>
-          <input
-            autoFocus
-            type="email"
-            value={signUpEmail}
-            onChange={handleEmailChange}
-            placeholder="이메일">
-          </input>
-          <input
-            type="password"
-            value={signUpPassword}
-            onChange={handlePasswordChange}
-            placeholder="비밀번호">
-          </input>
-          <input
-            type="password"
-            value={signUpPassword2}
-            onChange={handlePasswordChange2}
-            placeholder="비밀번호 확인">
-          </input>
-          {errorMsg && <span className={styles.error}>{errorMsg}</span>}
-          <Button className={styles.submit}>회원가입</Button>
-        </form>
-      </div>
+      <form className={styles.form} onSubmit={signUpSubmit}>
+        <input
+          autoFocus
+          type="email"
+          value={signUpEmail}
+          onChange={handleEmailChange}
+          placeholder="이메일">
+        </input>
+        <input
+          type="password"
+          value={signUpPassword}
+          onChange={handlePasswordChange}
+          placeholder="비밀번호">
+        </input>
+        <input
+          type="password"
+          value={signUpPassword2}
+          onChange={handlePasswordChange2}
+          placeholder="비밀번호 확인">
+        </input>
+        {errorMsg && <span className={styles.error}>{errorMsg}</span>}
+        <Button className={styles.submit}>회원가입</Button>
+      </form>
     </Container>
   );
 }
