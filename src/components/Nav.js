@@ -1,6 +1,6 @@
 import { Link, NavLink } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { userAtom } from '../recoil/userAtom';
+import { userState } from '../recoil/atoms/userAtom';
 import Container from './Container';
 import UserMenu from "./UserMenu";
 import styles from './Nav.module.css';
@@ -13,7 +13,7 @@ function getLinkStyle({ isActive }) { //현재 페이지가 내비게이션 링�
 }
 
 function Nav() {
-  const user = useRecoilValue(userAtom);
+  const user = useRecoilValue(userState);
 
   return (
     <div className={styles.nav}>

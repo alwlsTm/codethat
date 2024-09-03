@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { firebaseAuth } from "../firebase-config";
 import { useSetRecoilState } from "recoil";
-import { userAtom } from "../recoil/userAtom";
+import { userState } from "../recoil/atoms/userAtom";
 import Container from "../components/Container";
 import Button from "../components/Button";
 import styles from './SignPage.module.css';
@@ -13,7 +13,7 @@ function SignInPage() {
   const [signInEmail, setSignInEmail] = useState("");       //이메일 state
   const [signInPassword, setSignInPassword] = useState(""); //패스워드 state
   const [errorMsg, setErrorMsg] = useState("");             //에러 메시지 state
-  const setUser = useSetRecoilState(userAtom);  //유저 state
+  const setUser = useSetRecoilState(userState);  //유저 state
   const navigate = useNavigate();
 
   const handleEmailChange = (e) => setSignInEmail(e.target.value);

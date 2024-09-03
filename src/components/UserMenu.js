@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { firebaseAuth } from '../firebase-config';
 import { useSetRecoilState } from 'recoil';
-import { userAtom } from '../recoil/userAtom';
+import { userState } from '../recoil/atoms/userAtom';
 import styles from './UserMenu.module.css';
 import personIcon from '../IMGS/person.png';
 
 //Nav 유저 메뉴
 function UserMenu() {
   const [isOpen, setIsOpen] = useState(false);  //팝업 state
-  const setUser = useSetRecoilState(userAtom);  //유저 state
+  const setUser = useSetRecoilState(userState);  //유저 state
 
   const handleButtonClick = useCallback((e) => { //유저 메뉴 클릭
     e.stopPropagation();  //기본 동작 막기

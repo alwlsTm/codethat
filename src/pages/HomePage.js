@@ -8,9 +8,6 @@ import landingImg from '../IMGS/landing.svg';
 function HomePage() {
   return (
     <>
-      <Helmet>
-        <title>codethat</title>
-      </Helmet>
       <div className={styles.bg}></div>
       <Container className={styles.container}>
         <div className={styles.texts}>

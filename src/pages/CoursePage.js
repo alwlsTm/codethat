@@ -1,9 +1,10 @@
 import { onValue, push, ref } from 'firebase/database';
 import { firebaseDB } from '../firebase-config';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Navigate, useParams, useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import { userAtom } from '../recoil/userAtom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { userState, wishlistState } from '../recoil/atoms/userAtom';
+import { courseFindState } from '../recoil/atoms/courseAtom';
 import Button from '../components/Button';
 import Card from '../components/Card';
 import Container from '../components/Container';
@@ -12,11 +13,14 @@ import styles from './CoursePage.module.css';
 
 //코스 클릭 시 상세정보 페이지
 function CoursePage() {
-  const [course, setCourse] = useState([]); //코스 state
-  const [value, setValue] = useState([]);   //위시리스트 체크 state
+  const [wish, setWish] = useRecoilState(wishlistState);   //위시리스트 state
   const { courseSlug } = useParams();       //현재 페이지 경로의 courseSlug
-  const user = useRecoilValue(userAtom);
+  const course = useRecoilValue(courseFindState(courseSlug));  //해당 코스 state
+  const user = useRecoilValue(userState);   //유저 state
   const navigate = useNavigate();           //페이지 이동
+
+  //위시리스트 체크
+  const check = Object.values(wish).filter((v) => v.slug === courseSlug);
 
   const handleAddWishlistClick = () => {  //코스 담기
     if (user) {
@@ -37,23 +41,14 @@ function CoursePage() {
     navigate('/wishlist');
   };
 
-  useEffect(() => { //코스 찾기
-    const coursesRef = ref(firebaseDB, "courses"); //DB(카탈로그) 레퍼런스
-    onValue(coursesRef, (snapshot) => {
-      const courses = snapshot.val();
-      const slug = courses.find((course) => course.slug === courseSlug);  //courseSlug 찾기
-      setCourse(slug);
-    });
-  }, [courseSlug]);
-
-  useEffect(() => { //위시리스트 체크
+  useEffect(() => {
     if (user) {
       const wishlistRef = ref(firebaseDB, "wishlist/" + user);
       onValue(wishlistRef, (snapshot) => {
         if (snapshot.val()) {
-          const wishlist = Object.values(snapshot.val());
-          const value = wishlist.filter((val) => val.slug === courseSlug);  //위시리스트에 담겨있는 코스인지 체크
-          setValue(value);
+          setWish(snapshot.val());
+        } else {
+          setWish([]);
         }
       });
     }
@@ -69,7 +64,7 @@ function CoursePage() {
         <Container className={styles.content}>
           <CourseIcon photoUrl={course.photoUrl} />
           <h1 className={styles.title}>{course.title}</h1>
-          {value.length === 0 ? (
+          {check.length === 0 ? (
             <Button variant="round" onClick={handleAddWishlistClick}>
               + 코스 담기
             </Button>

@@ -1,9 +1,8 @@
-import { onValue, ref } from "firebase/database";
-import { firebaseDB } from "../firebase-config";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSearchParams } from 'react-router-dom';
 import { Helmet } from "react-helmet";
-import { filterByKeyword } from "../api";
+import { useRecoilValue } from "recoil";
+import { courseFilterState } from "../recoil/atoms/courseAtom";
 import CourseItem from "../components/CourseItem";
 import ListPage from '../components/ListPage';
 import styles from './CourseListPage.module.css';
@@ -13,10 +12,10 @@ import Warn from "../components/Warn";
 
 //카탈로그 페이지
 function CourseListPage() {
-  const [courses, setCourses] = useState([]);  //코스 state
   const [searchParams, setSearchParams] = useSearchParams();  //쿼리 스트링 파라미터 가져오기
   const initKeyword = searchParams.get('keyword');            //keyword 값 가져오기
   const [keyword, setKeyword] = useState(initKeyword || '');  //검색 키워드 state
+  const courses = useRecoilValue(courseFilterState(initKeyword));  //코스 state
 
   const handleKeywordChange = (e) => setKeyword(e.target.value);
 
@@ -29,19 +28,6 @@ function CourseListPage() {
         } : {}  //keyword 값이 없을 경우 빈 객체 전달
     );
   };
-
-  useEffect(() => {
-    const coursesRef = ref(firebaseDB, "courses");  //DB(카탈로그) 레퍼런스
-    onValue(coursesRef, (snapshot) => { //레퍼런스에서 데이터 읽기
-      const course = snapshot.val();
-      if (!initKeyword) { //키워드가 없으면
-        setCourses(course);
-      } else {  //키워드가 있으면
-        const filterItems = filterByKeyword(course, initKeyword); //필터링
-        setCourses(filterItems);
-      }
-    });
-  }, [initKeyword]);
 
   return (
     <>

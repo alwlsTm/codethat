@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { onValue, ref, remove } from 'firebase/database';
 import { firebaseAuth, firebaseDB } from '../firebase-config';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useRecoilValue } from 'recoil';
-import { userAtom } from '../recoil/userAtom';
+import { userState, wishlistState } from '../recoil/atoms/userAtom';
 import Container from '../components/Container';
 import CourseItem from '../components/CourseItem';
 import Warn from '../components/Warn';
@@ -14,32 +14,17 @@ import Button from '../components/Button';
 
 //위시리스트 페이지
 function WishlistPage() {
-  const [courses, setCourses] = useState([]); //위시리스트 코스 state
-  const user = useRecoilValue(userAtom);      //유저 state
-  const navigate = useNavigate();
+  const courses = useRecoilValue(wishlistState); //위시리스트 코스 state
+  const user = useRecoilValue(userState);      //유저 state
 
   const handleDeleteClick = (courseKey) => { //위시리스트 삭제
     const wishlistRef = ref(firebaseDB, "wishlist/" + user + `/${courseKey}`);
     remove(wishlistRef);  //key를 이용해 위시리스트 삭제
   };
 
-  useEffect(() => {
-    onAuthStateChanged(firebaseAuth, (currentUser) => { //로그인한 사용자 정보
-      if (currentUser) {  //사용자가 로그인 상태라면
-        const wishlistRef = ref(firebaseDB, "wishlist/" + user); //DB(위시리스트) 레퍼런스
-        onValue(wishlistRef, (snapshot) => {
-          const wishlist = snapshot.val();
-          if (wishlist) {
-            setCourses(wishlist); //{key: {wishlist: ... }}
-          } else {
-            setCourses([]);
-          }
-        });
-      } else {  //사용자가 로그인 상태가 아니라면
-        navigate('/signIn');
-      }
-    });
-  }, [user, navigate]);
+  if (!user) {
+    return <Navigate to="/" />
+  }
 
   return (
     <Container className={styles.container}>
