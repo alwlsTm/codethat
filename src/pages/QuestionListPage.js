@@ -1,8 +1,8 @@
-import { onValue, ref } from 'firebase/database';
-import { firebaseDB } from '../firebase-config';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link, useSearchParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { questionFilterState } from '../recoil/atoms/questionAtom';
 import Avatar from '../components/Avatar';
 import Card from '../components/Card';
 import DateText from '../components/DateText';
@@ -11,7 +11,6 @@ import searchBarStyles from '../components/SearchBar.module.css';
 import Warn from '../components/Warn';
 import searchIcon from '../IMGS/search.svg';
 import styles from './QuestionListPage.module.css';
-import { filterByKeyword } from '../api';
 
 //질문 리스트 아이템
 function QuestionItem({ question }) {
@@ -42,10 +41,10 @@ function QuestionItem({ question }) {
 
 //커뮤니티 페이지
 function QuestionListPage() {
-  const [questions, setQuestions] = useState([]);   //질문 state
   const [searchParams, setSearchParams] = useSearchParams();  //쿼리 값 가져오기
   const initKeyword = searchParams.get('keyword');  //keyword 값 가져오기
   const [keyword, setKeyword] = useState(initKeyword || '');  //검색 키워드 state
+  const questions = useRecoilValue(questionFilterState(initKeyword));  //질문 state
 
   const handleKeywordChange = (e) => setKeyword(e.target.value);
 
@@ -58,20 +57,6 @@ function QuestionListPage() {
         } : {}  //keyword 값이 없을 경우 빈 객체 전달
     );
   };
-
-  useEffect(() => {
-    const questionsRef = ref(firebaseDB, "questions");  //DB(커뮤니티) 레퍼런스
-    onValue(questionsRef, (snapshot) => { //레퍼런스에서 데이터 읽기
-      const question = snapshot.val();
-
-      if (!initKeyword) { //키워드가 없다면
-        setQuestions(question);
-      } else {  //키워드가 있다면
-        const filterItems = filterByKeyword(question, initKeyword); //필터링
-        setQuestions(filterItems);
-      }
-    });
-  }, [initKeyword]);
 
   return (
     <>

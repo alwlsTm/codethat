@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./components/App";
 import HomePage from "./pages/HomePage";
@@ -9,7 +10,6 @@ import NotFoundPage from "./pages/NotFoundPage";
 import WishlistPage from "./pages/WishlistPage";
 import SignUpPage from "./pages/SignUpPage";
 import SignInPage from "./pages/SignInPage";
-import { Suspense } from "react";
 
 function Main() {
   return (

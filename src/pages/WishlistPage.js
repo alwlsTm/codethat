@@ -1,8 +1,6 @@
-import { useEffect, useState } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
-import { onValue, ref, remove } from 'firebase/database';
-import { firebaseAuth, firebaseDB } from '../firebase-config';
-import { onAuthStateChanged } from 'firebase/auth';
+import { Link, Navigate } from 'react-router-dom';
+import { ref, remove } from 'firebase/database';
+import { firebaseDB } from '../firebase-config';
 import { useRecoilValue } from 'recoil';
 import { userState, wishlistState } from '../recoil/atoms/userAtom';
 import Container from '../components/Container';

@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
-import { onValue, ref } from 'firebase/database';
-import { firebaseDB } from '../firebase-config';
+import { useRecoilValue } from 'recoil';
+import { questionFindState } from '../recoil/atoms/questionAtom';
 import classNames from 'classnames';
 import Avatar from '../components/Avatar';
 import Card from '../components/Card';
@@ -13,17 +12,8 @@ import Warn from '../components/Warn';
 //커뮤니티 질문 클릭 시 페이지
 //질문 & 답변
 function QuestionPage() {
-  const [question, setQuestion] = useState([]); //question state
   const { questionId } = useParams(); //현재 페이지 경로의 questionId
-
-  useEffect(() => {
-    const questionsRef = ref(firebaseDB, "questions");  //DB(커뮤니티) 레퍼런스
-    onValue(questionsRef, (snapshot) => {
-      const questions = snapshot.val();
-      const id = questions.find((question) => (question.id === questionId));  //questionId 찾기
-      setQuestion(id);
-    });
-  }, [questionId]);
+  const question = useRecoilValue(questionFindState(questionId)); //질문 state
 
   if (!question) {  //없는 질문일 경우
     return <Navigate to="/questions" />;
